@@ -17,7 +17,7 @@ _Min_Stack_Size = 0x4000; /* Stack */
 MEMORY
 {
   /* RM0433 - Table 7 */
-  FLASH   (rx)  : ORIGIN = 0x08000000, LENGTH = 127K 
+  FLASH   (rx)  : ORIGIN = 0x90000000, LENGTH = 127K 
   BACKUP_RAM (xrw) : ORIGIN = 0x38800000, LENGTH = 4K
   RAM (xrw) : ORIGIN = 0x38000000, LENGTH = 64K - 4 /* double tap */
   SRAM3 (xrw) : ORIGIN = 0x30040000, LENGTH = 32K
