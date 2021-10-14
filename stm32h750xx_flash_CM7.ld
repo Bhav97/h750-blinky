@@ -23,7 +23,7 @@ MEMORY
   SRAM3 (xrw) : ORIGIN = 0x30040000, LENGTH = 32K
   SRAM2 (xrw) : ORIGIN = 0x30020000, LENGTH = 128K
   SRAM1 (xrw) : ORIGIN = 0x30000000, LENGTH = 128K
-  AXI_SRAM (xrw) : ORIGIN = 0x24000000, LENGTH = 512K
+  AXISRAM (xrw) : ORIGIN = 0x24000000, LENGTH = 512K
   /* Tightly coupled memory */
   DTCM (xrw) : ORIGIN = 0x20000000, LENGTH = 128K
 
@@ -38,9 +38,25 @@ SECTIONS
   .isr_vector :
   {
     . = ALIGN(4);
+    _sdata = .;        /* create a global symbol at data start */
     KEEP(*(.isr_vector)) /* Startup code */
     . = ALIGN(4);
-  } >FLASH
+  } >AXISRAM AT >FLASH
+
+  /* used by the startup to initialize data */
+  _sidata = LOADADDR(.isr_vector);
+
+  /* Initialized data sections goes into RAM, load LMA copy after code */
+  .data : 
+  {
+    . = ALIGN(4);
+    *(.data)           /* .data sections */
+    *(.data*)          /* .data* sections */
+    *(.ramfunc .ramfunc.*);
+    . = ALIGN(4);
+    _edata = .;        /* define a global symbol at data end */
+  } >AXISRAM AT >FLASH
+
   /* The program code and other data goes into FLASH */
   .text :
   {
@@ -101,21 +117,6 @@ SECTIONS
   {
     KEEP (*(.config))
   } >CONFIG
-
-  /* used by the startup to initialize data */
-  _sidata = LOADADDR(.data);
-
-  /* Initialized data sections goes into RAM, load LMA copy after code */
-  .data : 
-  {
-    . = ALIGN(4);
-    _sdata = .;        /* create a global symbol at data start */
-    *(.data)           /* .data sections */
-    *(.data*)          /* .data* sections */
-
-    . = ALIGN(4);
-    _edata = .;        /* define a global symbol at data end */
-  } >RAM AT> FLASH
 
   
   /* Uninitialized data section */
