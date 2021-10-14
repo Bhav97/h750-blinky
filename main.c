@@ -22,6 +22,8 @@ void SysTick_Handler(void)
 
 int main(void)
 {
+	SCB_EnableICache();
+	SCB_EnableDCache();
 	HAL_Init();
 	__HAL_RCC_GPIOE_CLK_ENABLE();
 	GPIO_InitTypeDef InitStruct = {0};
