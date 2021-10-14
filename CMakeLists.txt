@@ -30,6 +30,7 @@ ${CMAKE_SOURCE_DIR}/main.c
 
 target_compile_definitions(${TARGET_NAME} PRIVATE "STM32H750xx")
 target_compile_definitions(${TARGET_NAME} PRIVATE "HSE_VALUE=25000000U")
+target_compile_definitions(${TARGET_NAME} PRIVATE "VECT_TAB_SRAM")
 
 set(C_OPTS, "")
 set(C_OPTS "${C_OPTS} -mcpu=cortex-m4")
@@ -50,6 +51,7 @@ set(C_OPTS "${C_OPTS} -Wunused")
 set(C_OPTS "${C_OPTS} -Werror")
 set(C_OPTS "${C_OPTS} -Wsign-compare")
 set(C_OPTS "${C_OPTS} -fstack-usage")
+# set(C_OPTS "${C_OPTS} -fPIC")
 set(C_OPTS "${C_OPTS} -Wno-error=unused-parameter")
 set(C_OPTS "${C_OPTS} -Wno-error=sign-compare")
 set(C_OPTS "${C_OPTS} -Wno-error=implicit-function-declaration")
