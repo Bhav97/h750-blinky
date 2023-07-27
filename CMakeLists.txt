@@ -85,5 +85,5 @@ COMPILE_FLAGS ${C_OPTS}
 add_custom_command(TARGET ${TARGET_NAME} POST_BUILD COMMAND ${CMAKE_OBJCOPY} -O binary ${TARGET_NAME} ${PROJECT_NAME}.bin)
 
 # Generate UF2
-set(UF2CONV "../../../tinyuf2/lib/uf2/utils/uf2conv.py")
+set(UF2CONV "../../tinyuf2/lib/uf2/utils/uf2conv.py")
 add_custom_command(TARGET ${TARGET_NAME} POST_BUILD COMMAND ${UF2CONV} -f 0x6db66082 -b 0x90000000 -c -o ${PROJECT_NAME}.uf2 ${PROJECT_NAME}.bin)
